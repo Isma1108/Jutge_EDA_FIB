@@ -1,40 +1,32 @@
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <queue>
 using namespace std;
 
 vector<string> INP(0);
 vector<string> OUT(0);
 
-void topological_sort(map<string,pair<int,int>> pred, const map<string, vector<string>>& M) {
-	queue<string> Q;
-	map<string,pair<int,int>>::iterator it = pred.begin();
-	while (it != pred.end()) {
-		if (it->second.first = 1) Q.push(it->first);
-		++it;
-	}
-	while (not Q.empty()) {
-		cout << "He entrado" << endl;
-		Q.pop();
-		map<string,vector<string>>::const_iterator it = M.begin();
-		while (it != M.end()) {
-			if (it->second.size() != 0 and not pred[it->first].first) {
-				if (it->second[0] == "A" and pred[it->second[1]].first and pred[it->second[2]].first) {
+void topological_sort(unordered_map<string,pair<int,int>>& pred, const unordered_map<string, vector<string>>& M, int valid) {
+	unordered_map<string,vector<string>>::const_iterator it;
+	while (valid != pred.size()) {
+		it = M.begin();
+		while (it != M.end() and valid != pred.size()) {
+			if (it->second.size() != 0 and (pred[it->first]).first == 0) {
+				if (it->second[0] == "A" and pred[it->second[1]].first == 1 and pred[it->second[2]].first == 1) {
 					pred[it->first].second = (pred[it->second[1]].second and pred[it->second[2]].second);		
-					cout << (pred[it->second[1]].second and pred[it->second[2]].second) << endl;		
 					pred[it->first].first = 1;
-					Q.push(it->first);
+					++valid;
 				}
 				else if (it->second[0] == "O" and pred[it->second[1]].first and pred[it->second[2]].first) {
 					pred[it->first].second = pred[it->second[1]].second or pred[it->second[2]].second;		
 					pred[it->first].first = 1;
-					Q.push(it->first);
+					++valid;
 				}
 				else if (it->second[0] == "N" and pred[it->second[1]].first) {
 					pred[it->first].second = 1 - pred[it->second[1]].second;		
 					pred[it->first].first = 1;
-					Q.push(it->first);
+					++valid;
 				}
 			}
 			++it;
@@ -43,8 +35,8 @@ void topological_sort(map<string,pair<int,int>> pred, const map<string, vector<s
 }
 
 int main() {
-	map<string, vector<string>> M;
-	map<string,pair<int,int>> pred_logical_values;
+	unordered_map<string, vector<string>> M;
+	unordered_map<string,pair<int,int>> pred_logical_values;
 	string p;
 	cin >> p;
 	while (cin >> p and p != "END") {
@@ -95,28 +87,28 @@ int main() {
 	char input;
 	while (cin >> input) {
 		pred_logical_values[INP[0]].second = (input == 'T' ? 1 : 0);
+		pred_logical_values[INP[0]].first = 1;
 		for (int i = 1; i < INP.size(); ++i) {
 			cin >> input;
 			pred_logical_values[INP[i]].second = (input == 'T' ? 1 : 0);
+			pred_logical_values[INP[i]].first = 1;
 		}
+		
+		int valid = INP.size();
 
-		map<string,vector<string>>::const_iterator it = M.begin();
-		while (it != M.end()) {
-			cout << it->first << ": vector";
-			for (int i = 0; i < it->second.size(); ++i) cout << ' ' << it->second[i];
-			cout << endl;
-			++it;
-		}
-
-
-
-		topological_sort(pred_logical_values, M);
-
+		topological_sort(pred_logical_values, M, valid);
+		
 		cout << (pred_logical_values[OUT[0]].second == 0 ? 'F' : 'T'); 
 		for (int i = 1; i < OUT.size(); ++i) {
 			cout << ' ';
 			cout << (pred_logical_values[OUT[i]].second == 0 ? 'F' : 'T');
 		}
 		cout << endl;
+		
+		unordered_map<string,pair<int,int>>::iterator it = pred_logical_values.begin();
+		while (it != pred_logical_values.end()) {
+			it->second.first = 0;
+			++it;
+		}
 	}
 }
