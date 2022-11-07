@@ -1,3 +1,5 @@
+//El meu plantejament funciona, pero dona time limit al jutge :(
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -31,6 +33,11 @@ void topological_sort(unordered_map<string,pair<int,int>>& pred, const unordered
 			}
 			++it;
 		}
+	}
+	unordered_map<string,pair<int,int>>::iterator it2 = pred.begin();
+	while (it2 != pred.end()) {
+		it2->second.first = 0;
+		++it2;
 	}
 }
 
@@ -104,11 +111,5 @@ int main() {
 			cout << (pred_logical_values[OUT[i]].second == 0 ? 'F' : 'T');
 		}
 		cout << endl;
-		
-		unordered_map<string,pair<int,int>>::iterator it = pred_logical_values.begin();
-		while (it != pred_logical_values.end()) {
-			it->second.first = 0;
-			++it;
-		}
 	}
 }
