@@ -1,4 +1,8 @@
-//El meu plantejament funciona, pero dona time limit al jutge :(
+//El meu plantejament funciona, pero dona time limit al jutge,
+//Això es degut a que en aquest problema s'ha de passar els strings 
+//a integers (amb un map mateix) per fer tot el treball "gros" amb enters,
+//per poder accedir a vectors amb cost constant en comptes de logaritmic a maps<string,...>.
+//La solució que plantejo funciona, pero faltaria implementar aquesta millora.
 
 #include <iostream>
 #include <vector>
