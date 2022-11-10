@@ -7,7 +7,7 @@ typedef vector<char> VC;
 typedef vector<VC> VVC;
 typedef pair<int,int> coord;
 
-int BFS_dmax(VVC& mapa, int i, int j) {
+int BFS_dmax(const VVC& mapa, int i, int j) {
 	queue<coord> Q;
 	vector<vector<int>> dist(mapa.size(), vector<int>(mapa[0].size(), -1));
 	
@@ -20,7 +20,6 @@ int BFS_dmax(VVC& mapa, int i, int j) {
 		i = aux.first; j = aux.second;
 		Q.pop();
 		if (mapa[i][j] == 't') res = dist[i][j];
-		mapa[i][j] = 'X';
 		if (dist[i][j-1] == -1 and mapa[i][j-1] != 'X')  {
 			Q.push(make_pair(i,j-1)); dist[i][j-1] = dist[i][j] + 1;
 		}
