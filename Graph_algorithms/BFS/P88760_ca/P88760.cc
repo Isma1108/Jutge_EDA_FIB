@@ -25,7 +25,7 @@ int BFS_roques(const vector<roca>& V, double d) {
 		Q.pop();
 		if (pos == dist.size()-1) return dist[pos];
 		for (int j = 0; j < V.size(); ++j) {
-			if (j != pos and son_adjacents(V[pos], V[j], d) and dist[j] == -1) {
+			if (j != pos and dist[j] == -1 and son_adjacents(V[pos], V[j], d)) {
 				dist[j] = dist[pos] + 1;
 				Q.push(j);
 			}
