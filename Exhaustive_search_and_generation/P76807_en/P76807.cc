@@ -25,7 +25,7 @@ void print_solution(const VVI& sol) {
 }
 
 bool tot_correcte(int i, int j, int k, const VVB& files, const VVB& cols, const VVB& subq) {
-	return not files[i][k-1] and not cols[j][k-1] and not subq[quin_subq(i,j)][k-1] and not solucionat;
+	return not solucionat and not files[i][k-1] and not cols[j][k-1] and not subq[quin_subq(i,j)][k-1];
 }
 
 void resol_sudoku(VVI& sol, VVB& files, VVB& cols, VVB& subq, int i, int j) {

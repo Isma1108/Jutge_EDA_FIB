@@ -24,7 +24,7 @@ int dijkstra(const graf& G, int s, int d) {
 				int dist = D[v] + w.second;
 				if (dist < D[w.first]) {
 					D[w.first] = dist;
-					Q.push(make_pair(D[w.first], w.first));
+					Q.push(make_pair(dist, w.first));
 				}
 			}
 		}

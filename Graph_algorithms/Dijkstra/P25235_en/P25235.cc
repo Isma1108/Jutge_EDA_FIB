@@ -21,6 +21,7 @@ int dijkstra(const graf& G, int s, int d, vector<int>& passos) {
 		Q.pop();
 		if (not finished[v]) {
 			finished[v] = true;
+			if (v == d) return D[d];
 			for (auto w : G[v]) {
 				int dist = D[v] + w.second;
 				if (dist < D[w.first]) {
@@ -33,7 +34,7 @@ int dijkstra(const graf& G, int s, int d, vector<int>& passos) {
 			}
 		}
 	}
-	return D[d];
+	return INF;
 }
 
 int main() {
